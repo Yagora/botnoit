@@ -3,9 +3,14 @@
 require('dotenv').config();
 
 const
+  fs = require('fs'),
   express = require('express'),
   bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()); 
+  https = require('https'),
+  app = express().use(bodyParser.json()),
+  privateKey = fs.readFileSync('privkey.pem', 'utf8'),
+  certificate = fs.readFileSync('fullchain.pem', 'utf8'),
+  credentials = {key: privateKey, cert: certificate};
 
 app.post('/webhook', (req, res) => {
 
@@ -40,4 +45,4 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+https.createServer(credentials, app).listen(process.env.PORT || 1337, () => console.log('webhook is listening'));

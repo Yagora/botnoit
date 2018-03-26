@@ -1,5 +1,6 @@
 'use strict'
 
+const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.TOKEN_PAGE;
 
 function handleMessage(sender_psid, received_message) {

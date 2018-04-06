@@ -3,8 +3,24 @@
 const request = require('request');
 const PAGE_ACCESS_TOKEN = process.env.TOKEN_PAGE;
 
+const knownPersonnes = [];
+
+function handleFirstMessage(sender_psid) {
+    let response;
+
+    if (knownPersonnes.indexOf(sender_psid) === -1) {
+        response = {
+            "text": "Bonjour ! Je suis Botnoit le bot de toute botté ! Comme tu t'en doute de lance des gifs plus vite que mon oncle !!"
+        }
+        knownPersonnes.push(sender_psid);
+        callSendAPI(sender_psid, response);
+    }
+}
+
 function handleMessage(sender_psid, received_message) {
     let response;
+
+    handlerFirstMessage(sender_psid);
 
     if (received_message.text) {    
         response = {
@@ -12,10 +28,6 @@ function handleMessage(sender_psid, received_message) {
         }
     }  
     callSendAPI(sender_psid, response);
-}
-
-function handlePostback(sender_psid, received_postback) {
-
 }
 
 function callSendAPI(sender_psid, response) {
@@ -35,13 +47,12 @@ function callSendAPI(sender_psid, response) {
         if (!err) {
             console.log('message sent!')
         } else {
-            console.error("Unable to send message:" + err);
+            console.error('Unable to send message:' + err);
         }
     });
 }
 
 module.exports = {
     handleMessage,
-    handlePostback,
     callSendAPI
 }

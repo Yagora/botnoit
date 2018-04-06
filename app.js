@@ -24,10 +24,20 @@ function handleMessage(sender_psid, received_message) {
 
     if (received_message.text) {    
         response = {
-            "text": `Quoi ? Tu me dis : "${received_message.text}". Tu veux que je te casse ta sale tete?`
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "",
+                        "subtitle": "",
+                        "image_url": "https://media.giphy.com/media/3ornk7TgUdhjhTYgta/giphy.gif"
+                    }]
+                }
+            }
         }
-    }  
-    callSendAPI(sender_psid, response);
+        callSendAPI(sender_psid, response);
+    }
 }
 
 function callSendAPI(sender_psid, response) {

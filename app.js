@@ -25,14 +25,9 @@ function handleMessage(sender_psid, received_message) {
     if (received_message.text) {    
         response = {
             "attachment": {
-                "type": "template",
+                "type": "image",
                 "payload": {
-                    "template_type": "generic",
-                    "elements": [{
-                        "title": "",
-                        "subtitle": "",
-                        "image_url": "https://media.giphy.com/media/3ornk7TgUdhjhTYgta/giphy.gif"
-                    }]
+                    "url": "https://media.giphy.com/media/3ornk7TgUdhjhTYgta/giphy.gif"
                 }
             }
         }

@@ -20,7 +20,7 @@ function handleFirstMessage(sender_psid) {
 function handleMessage(sender_psid, received_message) {
     let response;
 
-    handlerFirstMessage(sender_psid);
+    handleFirstMessage(sender_psid);
 
     if (received_message.text) {    
         response = {

@@ -1,19 +1,30 @@
 'use strict'
 
 const request = require('request');
+const giphyCls = require('./Giphy.js');
 const PAGE_ACCESS_TOKEN = process.env.TOKEN_PAGE;
 
 const knownPersonnes = [];
+const Giphy = new giphyCls();
 
 function handleFirstMessage(sender_psid) {
     let response;
 
     if (knownPersonnes.indexOf(sender_psid) === -1) {
-        response = {
-            "text": "Bonjour ! Je suis Botnoit le bot de toute botté ! Comme tu t'en doute de lance des gifs plus vite que mon oncle !!"
-        }
-        knownPersonnes.push(sender_psid);
-        callSendAPI(sender_psid, response);
+        Giphy.random()
+            .then(url => {
+                response = {
+                    "text": "Bonjour ! Je suis Botnoit le bot de toute botté ! Comme tu t'en doute de lance des gifs plus vite que mon oncle !!",
+                    "attachment": {
+                        "type": "image",
+                        "payload": {
+                            "url": url 
+                        }
+                    }
+                }
+                knownPersonnes.push(sender_psid);
+                callSendAPI(sender_psid, response);
+            });
     }
 }
 

@@ -29,24 +29,31 @@ function handleFirstMessage(sender_psid) {
                 }
                 callSendAPI(sender_psid, response);
             });
+
+        return true;
     }
+
+    return false;
 }
 
 function handleMessage(sender_psid, received_message) {
     let response;
 
-    handleFirstMessage(sender_psid);
+    const firstMessage = handleFirstMessage(sender_psid);
 
-    if (received_message.text) {    
-        response = {
-            "attachment": {
-                "type": "image",
-                "payload": {
-                    "url": "https://media.giphy.com/media/3ornk7TgUdhjhTYgta/giphy.gif"
+    if (!firstMessage && received_message.text) {    
+        Giphy.search(received_message.text)
+            .then(url => {
+                response = {
+                    "attachment": {
+                        "type": "image",
+                        "payload": {
+                            "url": url 
+                        }
+                    }
                 }
-            }
-        }
-        callSendAPI(sender_psid, response);
+                callSendAPI(sender_psid, response);
+            });
     }
 }
 

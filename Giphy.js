@@ -7,21 +7,10 @@ class Giphy {
     }
 
     _handleGiphy(uri, keyWords) {
-        const json = {
-            "api_key": this._giphyApiKey
-        }
-
-        if (keyWords) {
-            json.q = keyWords;
-            json.limit = 1;
-        }
-
         return new Promise((resolve,reject) => {
             request({
                 "uri": uri,
-                "qs": { "access_token": this._giphyApiKey },
-                "method": "GET",
-                "json": json
+                "method": "GET"
             }, (err, res, body) => {
                 if (!err) {
                     resolve(body.data.images.original.url);
@@ -34,11 +23,16 @@ class Giphy {
     }
 
     random() {
-        return this._handleGiphy('http://api.giphy.com/v1/gifs/random');
+        const giphyApiKey = this._giphyApiKey;
+
+        return this._handleGiphy(`http://api.giphy.com/v1/gifs/random?api_key=${giphyApiKey}`);
     }
 
     search(keyWords) {
-        return this._handleGiphy('http://api.giphy.com/v1/gifs/search', keyWords);
+        const keyWordsFormatted = keyWords.split(" ").join("+");
+        const giphyApiKey = this._giphyApiKey;
+
+        return this._handleGiphy(`http://api.giphy.com/v1/gifs/search?q=${keyWordsFormatted}&api_key=${giphyApiKey}`);
     }
 }
 

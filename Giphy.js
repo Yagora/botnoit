@@ -1,6 +1,10 @@
 'use strict';
 const request = require('request');
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
 class Giphy {
     constructor() {
         this._giphyApiKey = process.env.TOKEN_GIPHY_API;
@@ -16,7 +20,9 @@ class Giphy {
                 console.log(body.data);
                 if (!err) {
                     if (body.data instanceof Array) {
-                        resolve(body.data[0].images.original.url);
+                        const randomInt = getRandomInt(body.data.length);
+
+                        resolve(body.data[randomInt].images.original.url);
                     } else {
                         resolve(body.data.images.original.url);
                     }
@@ -38,7 +44,7 @@ class Giphy {
         const keyWordsFormatted = keyWords.split(" ").join("+");
         const giphyApiKey = this._giphyApiKey;
 
-        return this._handleGiphy(`http://api.giphy.com/v1/gifs/search?q=${keyWordsFormatted}&api_key=${giphyApiKey}&limit=1`);
+        return this._handleGiphy(`http://api.giphy.com/v1/gifs/search?q=${keyWordsFormatted}&api_key=${giphyApiKey}`);
     }
 }
 

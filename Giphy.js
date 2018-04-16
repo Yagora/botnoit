@@ -15,7 +15,11 @@ class Giphy {
                 const body = JSON.parse(bodyString);
                 console.log(body.data);
                 if (!err) {
-                    resolve(body.data.images.original.url);
+                    if (body.data instanceof Array) {
+                        resolve(body.data[0].images.original.url);
+                    else {
+                        resolve(body.data.images.original.url);
+                    }
                 } else {
                     console.error('Unable to reach Giphy: ' + err);
                     reject();

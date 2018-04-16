@@ -13,7 +13,7 @@ class Giphy {
                 "method": "GET"
             }, (err, res, bodyString) => {
                 const body = JSON.parse(bodyString);
-
+                console.log(body.data);
                 if (!err) {
                     resolve(body.data.images.original.url);
                 } else {
@@ -34,7 +34,7 @@ class Giphy {
         const keyWordsFormatted = keyWords.split(" ").join("+");
         const giphyApiKey = this._giphyApiKey;
 
-        return this._handleGiphy(`http://api.giphy.com/v1/gifs/search?q=${keyWordsFormatted}&api_key=${giphyApiKey}`);
+        return this._handleGiphy(`http://api.giphy.com/v1/gifs/search?q=${keyWordsFormatted}&api_key=${giphyApiKey}&limit=1`);
     }
 }
 

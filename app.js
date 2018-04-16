@@ -12,7 +12,7 @@ function handleFirstMessage(sender_psid) {
 
     if (knownPersonnes.indexOf(sender_psid) === -1) {
         response = {
-            "text": "Bonjour ! Je suis Botnoit le bot de toute botté ! Comme tu t'en doute de lance des gifs plus vite que mon oncle !!"
+            "text": "Bonjour ! Je suis Botnoit le bot de toute botté ! Comme tu t'en doute je lance des gifs plus vite que mon oncle !!"
         }
         knownPersonnes.push(sender_psid);
         callSendAPI(sender_psid, response);

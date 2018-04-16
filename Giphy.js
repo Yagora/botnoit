@@ -17,7 +17,7 @@ class Giphy {
                 if (!err) {
                     if (body.data instanceof Array) {
                         resolve(body.data[0].images.original.url);
-                    else {
+                    } else {
                         resolve(body.data.images.original.url);
                     }
                 } else {

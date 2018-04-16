@@ -11,7 +11,9 @@ class Giphy {
             request({
                 "uri": uri,
                 "method": "GET"
-            }, (err, res, body) => {
+            }, (err, res, bodyString) => {
+                const body = JSON.parse(bodyString);
+
                 if (!err) {
                     resolve(body.data.images.original.url);
                 } else {
